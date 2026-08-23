@@ -3,12 +3,8 @@
   "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/",
-      "destination": "/happybday/index.html"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/happybday/$1"
+      "source": "/happybday/(.*)",
+      "destination": "/$1"
     }
   ]
 }

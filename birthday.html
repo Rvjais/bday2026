@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Happy Birthday Swastika ✨</title>
+<link rel="stylesheet" href="file/navbar.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body,#app{width:100%;height:100%;height:100dvh;margin:0;overflow:hidden}
+body{font-family:'Libre Baskerville',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,#ffeef8 0%,#ffe4f1 100%)}
+.hidden{display:none!important}
+.view{width:100%;height:100%;height:100dvh;overflow-y:auto;overflow-x:hidden}
+
+.intro-container{display:flex;align-items:center;justify-content:center;min-height:100%;padding:clamp(1rem,4vw,2.5rem)}
+.intro-content{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(1.25rem,3.5vw,2.5rem);max-width:600px;width:100%;background:rgba(255,255,255,0.45);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:clamp(1.5rem,5vw,3rem);border-radius:2rem;border:1px solid rgba(255,255,255,0.4);box-shadow:0 8px 32px rgba(201,24,74,0.12);animation:introFadeIn 0.6s ease-in-out}
+.intro-text-section{text-align:center;width:100%}
+.intro-title{font-size:clamp(1.6rem,5vw,2.8rem);font-weight:700;color:#c9184a;margin-bottom:clamp(0.75rem,2vw,1.5rem);text-shadow:0 2px 4px rgba(201,24,74,0.15);letter-spacing:-0.5px}
+.intro-subtitle{font-size:clamp(1rem,3vw,1.25rem);color:#d63a5a;font-weight:500;margin-bottom:clamp(1.25rem,2.8vw,2rem);line-height:1.5}
+.intro-message{display:flex;flex-direction:column;gap:clamp(0.6rem,1.5vw,1rem);margin-bottom:clamp(1rem,2vw,1.5rem)}
+.intro-paragraph{font-size:clamp(0.95rem,2.6vw,1.15rem);color:#c9184a;font-weight:500;line-height:1.6;letter-spacing:0.3px}
+.intro-button{background:linear-gradient(135deg,#ff69b4 0%,#ff1493 100%);color:white;border:none;padding:clamp(0.875rem,2.5vw,1.25rem) clamp(2rem,5vw,2.8rem);font-size:clamp(1rem,2.8vw,1.2rem);font-weight:600;border-radius:50px;cursor:pointer;transition:all 0.3s ease;box-shadow:0 4px 18px rgba(255,20,147,0.35);text-shadow:0 1px 2px rgba(0,0,0,0.1);white-space:nowrap;letter-spacing:0.5px}
+.intro-button:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(255,20,147,0.5)}
+.intro-button:active{transform:translateY(0);box-shadow:0 2px 10px rgba(255,20,147,0.3)}
+.intro-decoration{display:flex;gap:clamp(1rem,3vw,2rem);align-items:center;justify-content:center;width:100%}
+.intro-icon{width:clamp(1.5rem,4vw,2.5rem);height:clamp(1.5rem,4vw,2.5rem);animation:introFloat 3s ease-in-out infinite}
+.intro-heart-1{color:#ff1493;fill:#ff1493;animation-delay:0s}
+.intro-heart-2{color:#ff1493;fill:#ff1493;animation-delay:1s}
+.intro-heart-3{color:#ff1493;fill:#ff1493;animation-delay:1.5s}
+.intro-sparkle-1{color:#ffc0cb;animation-delay:0.5s}
+.intro-sparkle-2{color:#ffc0cb;animation-delay:1.2s}
+.intro-sparkle-3{color:#ffc0cb;animation-delay:1.7s}
+.intro-decoration-top{margin-bottom:clamp(0.5rem,1vw,1rem)}
+.intro-decoration-bottom{margin-top:clamp(0.5rem,1vw,1rem)}
+
+.puzzle-view{display:flex;flex-direction:column;gap:clamp(0.5rem,2vw,1.8rem);padding:clamp(0.5rem,3vw,2rem);min-height:100%;align-items:center;justify-content:center}
+.puzzle-title{font-size:clamp(1.6rem,4.5vw,2.5rem);font-weight:700;color:#c9184a;text-align:center;margin-bottom:0.25rem;text-shadow:0 2px 4px rgba(201,24,74,0.15);letter-spacing:-0.5px;animation:titlePulse 2s ease-in-out infinite}
+.puzzle-hint{font-size:clamp(0.85rem,2.2vw,1rem);color:#c9184a;text-align:center;font-weight:600;padding:clamp(0.5rem,1.5vw,0.85rem) clamp(1rem,2vw,1.5rem);background:rgba(255,192,203,0.35);border-left:3px solid #ff69b4;border-radius:0.5rem;margin-top:clamp(0.5rem,1.5vw,1rem);max-width:520px;margin-left:auto;margin-right:auto;box-shadow:0 2px 10px rgba(201,24,74,0.06)}
+.columns-wrapper{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:clamp(0.25rem,1.5vw,1.5rem);align-items:center;justify-items:center;width:100%;max-width:900px;margin:auto 0}
+.column{width:100%;min-height:clamp(10rem,28vw,20rem);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
+.side-column{background:transparent;border:none}
+.center-column{position:relative;padding:clamp(0.5rem,2vw,1.5rem) clamp(0.25rem,1vw,1rem)}
+.heart-outline{position:absolute;width:clamp(8rem,26vw,15rem);height:clamp(8rem,26vw,15rem);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;display:flex;align-items:center;justify-content:center}
+.heart-outline .outline-piece{width:50%;height:100%;object-fit:contain;opacity:0.18}
+.heart-outline .outline-piece.left{margin-right:-3px}
+.heart-outline .outline-piece.right{margin-left:-3px}
+.center-slots{position:absolute;width:clamp(8rem,26vw,15rem);height:clamp(8rem,26vw,15rem);top:50%;left:50%;transform:translate(-50%,-50%);display:flex;z-index:8;pointer-events:none}
+.center-slot{width:50%;height:100%;display:flex;align-items:center;justify-content:center}
+.center-slot.left{justify-content:flex-end;padding-right:0.15rem}
+.center-slot.right{justify-content:flex-start;padding-left:0.15rem}
+.center-slot .drag-item{margin:0;pointer-events:auto;position:relative}
+.column-title{color:#c9184a;font-size:clamp(0.85rem,2.2vw,1.15rem);font-weight:700;text-align:center;letter-spacing:0.5px;margin-bottom:clamp(0.4rem,1.2vw,1rem)}
+.drag-item{width:clamp(3.8rem,12vw,7rem);height:clamp(7.5rem,24vw,14rem);margin:clamp(0.25rem,1vw,0.75rem) auto;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;transition:transform 0.2s ease,filter 0.2s ease;filter:drop-shadow(0 0.25rem 0.75rem rgba(255,105,180,0.3));position:relative}
+.drag-item:active{cursor:grabbing}
+.drag-item.dragging{cursor:grabbing;transform:scale(1.1) rotate(2deg);filter:drop-shadow(0 0.5rem 1.25rem rgba(255,105,180,0.5))}
+.drag-item-image{width:100%;height:100%;display:block;object-fit:contain;pointer-events:none}
+.paired-container{display:flex;gap:0;margin:0 auto;width:clamp(7.6rem,24vw,14rem);height:clamp(7.5rem,24vw,14rem);position:relative;z-index:10}
+.paired-container::before{content:'';position:absolute;top:-10%;left:-10%;right:-10%;bottom:-10%;border-radius:50%;background:radial-gradient(circle,rgba(255,105,180,0.4) 0%,transparent 70%);pointer-events:none}
+.paired-piece{width:50%;height:100%;object-fit:contain}
+.puzzle-instruction-sub{font-size:clamp(0.9rem,2.5vw,1.1rem);color:#d63a5a;font-weight:600;text-align:center;line-height:1.5;opacity:0.95}
+
+.success-container{display:flex;align-items:center;justify-content:center;min-height:100%;background:linear-gradient(135deg,#ffeef8 0%,#ffe4f1 100%);padding:clamp(0.75rem,3vw,2.5rem)}
+.message-container{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;animation:fadeIn 0.8s ease-in;width:100%;max-width:600px;gap:1.25rem}
+.complete-heart{width:clamp(9rem,28vw,16rem);height:clamp(9rem,28vw,16rem);margin:0;position:relative}
+.complete-heart::before{content:'';position:absolute;top:clamp(-0.875rem,-2.5vw,-1.875rem);left:clamp(-0.875rem,-2.5vw,-1.875rem);right:clamp(-0.875rem,-2.5vw,-1.875rem);bottom:clamp(-0.875rem,-2.5vw,-1.875rem);border-radius:50%;background:radial-gradient(circle,rgba(255,105,180,0.5) 50%,transparent 70%);animation:heartPulseLarge 1.5s ease-in-out infinite;pointer-events:none}
+.complete-heart img{width:100%;height:100%;object-fit:contain;animation:imagePulse 1.5s ease-in-out infinite}
+.message-text{color:#c9184a;font-size:clamp(1.15rem,3.5vw,2rem);font-weight:700;text-shadow:0 0.125rem 0.5rem rgba(201,24,74,0.25);margin:0}
+.message-para{color:#c9184a;font-size:clamp(0.85rem,2.4vw,1.05rem);font-weight:600;text-shadow:0 0.125rem 0.5rem rgba(201,24,74,0.2);margin:0}
+
+.wish-screen{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(135deg,#fce7f3 0%,#fff1f2 50%,#fbcfe8 100%)}
+.wish-deco{position:absolute;pointer-events:none;will-change:filter,transform,opacity;animation:glowPulse 2.6s ease-in-out infinite;filter:drop-shadow(0 0 6px rgba(255,105,180,0.35))}
+.wish-card{position:relative;z-index:10;max-width:48rem;margin:auto;padding:0 1rem;width:100%}
+.wish-card-inner{background:rgba(255,255,255,0.45);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:1.5rem;box-shadow:0 20px 45px -10px rgba(201,24,74,0.15);padding:clamp(1.5rem,4vw,2.8rem);border:1px solid rgba(255,255,255,0.4)}
+.wish-header{display:flex;align-items:center;justify-content:center;gap:0.75rem;margin-bottom:clamp(1rem,2.5vw,1.8rem)}
+.wish-header svg{width:2rem;height:2rem;color:#ec4899;fill:#f472b6}
+.wish-header svg.sparkle{color:#fb7185;fill:none;width:1.5rem;height:1.5rem}
+.wish-text-area{min-height:clamp(100px, 18vw, 150px);display:flex;align-items:center;justify-content:center}
+.wish-text{font-size:clamp(1.15rem,3.8vw,1.85rem);text-align:center;color:rgba(131,24,67,0.95);font-style:italic;line-height:1.7}
+.wish-cursor{display:inline-block;width:2px;height:1.2em;background:currentColor;margin-left:4px;vertical-align:middle;animation:blink 1s step-end infinite}
+.wish-dots{display:flex;justify-content:center;gap:0.5rem;margin-top:clamp(1rem,2vw,1.75rem)}
+.wish-dot{width:0.5rem;height:0.5rem;border-radius:9999px;background:rgba(236,72,153,0.3);transition:all 0.3s ease}
+.wish-dot.active{background:#ec4899;width:2rem}
+.wish-footer{text-align:center;margin-top:1.25rem}
+.wish-footer p{color:rgba(190,24,93,0.65);font-style:italic;font-size:0.875rem}
+.wish-celebrate{position:absolute;bottom:0.75rem;right:0.75rem;z-index:30;pointer-events:none}
+.wish-celebrate img{width:clamp(4.5rem,13vw,9rem);max-width:none;display:block}
+
+.drag-ghost{position:fixed;z-index:9999;pointer-events:none;width:clamp(3.8rem,12vw,7rem);height:clamp(7.5rem,24vw,14rem);filter:drop-shadow(0 0.5rem 1.25rem rgba(255,105,180,0.5));transform:scale(1.1) rotate(2deg)}
+.drag-ghost img{width:100%;height:100%;object-fit:contain}
+
+@keyframes introFadeIn{from{opacity:0;transform:scale(0.95) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes introFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(clamp(-8px,-1.5vw,-15px))}}
+@keyframes titlePulse{0%,100%{opacity:1}50%{opacity:0.85}}
+@keyframes heartPulse{0%,100%{transform:scale(1);opacity:0.5}50%{transform:scale(1.3);opacity:0.2}}
+@keyframes heartPulseLarge{0%,100%{transform:scale(1);opacity:0.6}50%{transform:scale(1.4);opacity:0.2}}
+@keyframes fadeIn{from{opacity:0;transform:scale(0.8)}to{opacity:1;transform:scale(1)}}
+@keyframes imagePulse{0%,100%{transform:scale(1)}14%{transform:scale(1.08)}28%{transform:scale(1)}42%{transform:scale(1.06)}70%{transform:scale(1)}}
+@keyframes glowPulse{0%,100%{filter:drop-shadow(0 0 6px rgba(255,105,180,0.35));opacity:1;transform:translateY(0) scale(1)}40%{filter:drop-shadow(0 0 18px rgba(255,105,180,0.8));opacity:0.95;transform:translateY(-3px) scale(1.03)}60%{filter:drop-shadow(0 0 14px rgba(255,182,193,0.65));opacity:0.98;transform:translateY(-1px) scale(1.02)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+</style>
+</head>
+<body>
+<div id="app">
+
+<section id="view-intro" class="view intro-container">
+<div class="intro-content">
+<div class="intro-decoration intro-decoration-top">
+<svg class="intro-icon intro-heart-1" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+<svg class="intro-icon intro-sparkle-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/></svg>
+<svg class="intro-icon intro-heart-2" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+</div>
+<div class="intro-text-section">
+<h1 class="intro-title">Is it your birthday today, Swastika?? ✨</h1>
+<p class="intro-subtitle">Something magical is about to happen... &#10024;</p>
+<div class="intro-message">
+<p class="intro-paragraph">First, let's mend this special heart &#128149;</p>
+<p class="intro-paragraph">Because it holds all the happiest wishes for you!</p>
+</div>
+</div>
+<div class="intro-decoration intro-decoration-bottom">
+<svg class="intro-icon intro-sparkle-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/></svg>
+<svg class="intro-icon intro-heart-3" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+<svg class="intro-icon intro-sparkle-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/></svg>
+</div>
+<button class="intro-button" id="intro-btn">Let's Begin! &lt;3</button>
+</div>
+</section>
+
+<section id="view-puzzle" class="view puzzle-view hidden">
+<h1 class="puzzle-title">&#128149; Mend the Heart &#128149;</h1>
+<p class="puzzle-instruction-sub">Drag or tap the pieces to mend the heart</p>
+<div class="columns-wrapper">
+<div class="column side-column" id="col-left" data-section="leftCol">
+<h3 class="column-title">Left Piece</h3>
+<div id="left-items"></div>
+</div>
+<div class="column center-column" id="col-center" data-section="InProgress">
+<div class="heart-outline">
+<img src="file/hrt1.png" alt="outline-left" class="outline-piece left" draggable="false">
+<img src="file/hrt2.png" alt="outline-right" class="outline-piece right" draggable="false">
+</div>
+<div class="center-slots" id="center-slots">
+<div class="center-slot left" id="slot-left"></div>
+<div class="center-slot right" id="slot-right"></div>
+</div>
+<div id="paired-area"></div>
+<h3 class="column-title" style="position:relative;z-index:9"></h3>
+</div>
+<div class="column side-column" id="col-right" data-section="rightCol">
+<h3 class="column-title">Right Piece</h3>
+<div id="right-items"></div>
+</div>
+</div>
+<div class="puzzle-hint">&#128161; Tip: Drag or tap the pieces to mend the heart</div>
+</section>
+
+<section id="view-success" class="view success-container hidden">
+<div class="message-container" id="success-btn">
+<div class="message-text">&#10024; Your Heart is Whole Again! &#10024;</div>
+<div class="complete-heart">
+<img src="file/heart.png" alt="complete-heart" draggable="false">
+</div>
+<div class="message-text">&#128149; Close your eyes and make a beautiful wish... &#128149;</div>
+<div class="message-para puzzle-hint">&#128161; Tap anywhere when you're ready for your message &#128059;</div>
+</div>
+</section>
+
+<section id="view-wish" class="view wish-screen hidden">
+<div class="wish-deco" style="top:4%;left:4%;color:#f9a8d4;fill:#f9a8d4;width:clamp(1.5rem,4vw,2rem);height:clamp(1.5rem,4vw,2rem);animation-delay:0s">
+<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+</div>
+<div class="wish-deco" style="top:8%;right:6%;color:#fda4af;fill:#fda4af;width:clamp(1.25rem,3.5vw,1.5rem);height:clamp(1.25rem,3.5vw,1.5rem);animation-delay:1s">
+<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+</div>
+<div class="wish-deco" style="bottom:8%;left:6%;color:#f472b6;fill:none;width:clamp(1.25rem,3.5vw,1.5rem);height:clamp(1.25rem,3.5vw,1.5rem);animation-delay:0.5s">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/></svg>
+</div>
+<div class="wish-deco" style="bottom:12%;right:8%;color:#f9a8d4;fill:#f9a8d4;width:clamp(1.5rem,4.5vw,2.5rem);height:clamp(1.5rem,4.5vw,2.5rem);animation-delay:1.5s">
+<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+</div>
+<div class="wish-deco" style="top:18%;right:12%;color:#fda4af;fill:none;width:clamp(1.35rem,3.8vw,1.85rem);height:clamp(1.35rem,3.8vw,1.85rem);animation-delay:2s">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/></svg>
+</div>
+<div class="wish-deco" style="bottom:4%;left:50%;transform:translateX(-50%);color:#fb7185;fill:none;width:clamp(1.25rem,3.5vw,1.75rem);height:clamp(1.25rem,3.5vw,1.75rem);animation-delay:0.3s">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9"/><path d="M20 3v4"/><path d="M22 5h-4"/></svg>
+</div>
+<div class="wish-deco" style="top:48%;left:4%;color:#fbcfe8;fill:#fbcfe8;width:clamp(1.25rem,3.5vw,1.75rem);height:clamp(1.25rem,3.5vw,1.75rem);animation-delay:0.8s">
+<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+</div>
+<div class="wish-deco" style="top:25%;left:18%;color:#fb7185;fill:none;width:clamp(1.2rem,3.2vw,1.5rem);height:clamp(1.2rem,3.2vw,1.5rem);animation-delay:1.8s">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9"/><path d="M20 3v4"/><path d="M22 5h-4"/></svg>
+</div>
+
+<div class="wish-card">
+<div class="wish-card-inner">
+<div class="wish-header">
+<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+<svg class="sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/></svg>
+<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+</div>
+<div class="wish-text-area">
+<p class="wish-text" id="wish-text"></p>
+</div>
+<div class="wish-dots" id="wish-dots"></div>
+</div>
+<div class="wish-footer">
+<p>Messages from my heart</p>
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px;">
+  <a href="music.html" class="wish-nav-btn" style="display:inline-flex;align-items:center;gap:6px;color:#c9184a;font-size:13px;font-weight:700;text-decoration:none;background:rgba(255,255,255,0.85);padding:6px 14px;border-radius:50px;border:1px solid rgba(201,24,74,0.25);">&#10094; Music</a>
+  <a href="games.html" class="wish-nav-btn" style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#ff69b4 0%,#ff1493 100%);color:#ffffff;padding:6px 16px;border-radius:50px;font-size:13px;font-weight:700;text-decoration:none;box-shadow:0 3px 12px rgba(255,20,147,0.45);"><span>🎮 Play Arcade &#10095;</span></a>
+</div>
+</div>
+</div>
+<div class="wish-celebrate">
+<img src="file/celebrate.gif" alt="Celebrate">
+</div>
+</section>
+
+</div>
+
+<script>
+(function(){
+var WISH_MESSAGES=[
+"Another year older, ten times cooler! ✨",
+"May all your wishes and dreams come true! 🍀",
+"Wishing you the brightest, most wonderful August 25th! 🌟",
+"A million extra happy smiles to you! 😊",
+"You are a limited edition with unlimited potential! 💫",
+"You are absolutely amazing, never forget that! 🌸",
+"Wishing you endless happiness and success in the year ahead! 🚀",
+"Roses are red, skies are blue, wishing the happiest birthday to you! 🎂",
+"Hope your birthday lights up with laughter and good vibes! 💖"
+];
+
+var wishAudio=null;
+var typewriterTimer=null;
+var wishIdx=0;
+var wishCharIdx=0;
+var cursorBlinkTimer=null;
+
+function showView(id){
+  document.querySelectorAll('.view').forEach(function(v){v.classList.add('hidden')});
+  document.getElementById(id).classList.remove('hidden');
+}
+
+function playSound(src,vol){
+  try{var a=new Audio(src);a.volume=vol||0.5;var p=a.play();if(p&&p.catch)p.catch(function(){});return a}catch(e){return null}
+}
+
+document.getElementById('intro-btn').addEventListener('click',function(){
+  showView('view-puzzle');
+  renderPuzzle();
+});
+
+var puzzleState={
+  leftCol:[{sliceId:1,side:'left'}],
+  InProgress:[],
+  rightCol:[{sliceId:1,side:'right'}]
+};
+
+function getPairedItems(items){
+  var pairs={};
+  var unpaired=[];
+  items.forEach(function(item){
+    if(!pairs[item.sliceId])pairs[item.sliceId]={};
+    pairs[item.sliceId][item.side]=item;
+  });
+  var result=[];
+  Object.keys(pairs).forEach(function(k){
+    if(pairs[k].left&&pairs[k].right){result.push(pairs[k])}
+    else{
+      if(pairs[k].left)unpaired.push(pairs[k].left);
+      if(pairs[k].right)unpaired.push(pairs[k].right);
+      delete pairs[k];
+    }
+  });
+  return{pairs:result,unpaired:unpaired}
+}
+
+function canDrop(draggedItem,targetSection){
+  if(!draggedItem||targetSection!=='InProgress')return false;
+  var item=draggedItem.item;
+  var src=draggedItem.sourceSection;
+  return(item.side==='left'&&src==='leftCol')||(item.side==='right'&&src==='rightCol')
+}
+
+function placePiece(side, sliceId){
+  var src=side==='left'?'leftCol':'rightCol';
+  var arr=puzzleState[src];
+  for(var i=0;i<arr.length;i++){
+    if(arr[i].side===side&&arr[i].sliceId===sliceId){
+      var item=arr.splice(i,1)[0];
+      puzzleState.InProgress.push(item);
+      playSound('file/GlassSound.wav',0.5);
+      renderPuzzle();
+      var p=getPairedItems(puzzleState.InProgress);
+      if(p.pairs.length>0){
+        setTimeout(function(){showView('view-success')},800);
+      }
+      return true;
+    }
+  }
+  return false;
+}
+
+function renderPuzzle(){
+  var leftDiv=document.getElementById('left-items');
+  var rightDiv=document.getElementById('right-items');
+  var slotLeft=document.getElementById('slot-left');
+  var slotRight=document.getElementById('slot-right');
+  var pairedArea=document.getElementById('paired-area');
+
+  leftDiv.innerHTML='';
+  rightDiv.innerHTML='';
+  slotLeft.innerHTML='';
+  slotRight.innerHTML='';
+  pairedArea.innerHTML='';
+
+  puzzleState.leftCol.forEach(function(item){
+    var el=createDragItem(item,'leftCol');
+    leftDiv.appendChild(el);
+  });
+
+  puzzleState.rightCol.forEach(function(item){
+    var el=createDragItem(item,'rightCol');
+    rightDiv.appendChild(el);
+  });
+
+  var p=getPairedItems(puzzleState.InProgress);
+  var leftUnpaired=p.unpaired.find(function(u){return u.side==='left'});
+  var rightUnpaired=p.unpaired.find(function(u){return u.side==='right'});
+
+  if(leftUnpaired){
+    slotLeft.appendChild(createDragItem(leftUnpaired,'InProgress'));
+  }
+  if(rightUnpaired){
+    slotRight.appendChild(createDragItem(rightUnpaired,'InProgress'));
+  }
+
+  p.pairs.forEach(function(){
+    var pc=document.createElement('div');
+    pc.className='paired-container';
+    var img1=document.createElement('img');
+    img1.src='file/hrt1.png';img1.className='paired-piece';img1.draggable=false;
+    var img2=document.createElement('img');
+    img2.src='file/hrt2.png';img2.className='paired-piece';img2.draggable=false;
+    pc.appendChild(img1);pc.appendChild(img2);
+    pairedArea.appendChild(pc);
+  });
+}
+
+function createDragItem(item,section){
+  var el=document.createElement('div');
+  el.className='drag-item';
+  el.setAttribute('data-section',section);
+  el.setAttribute('data-side',item.side);
+  el.setAttribute('data-slice',item.sliceId);
+  var img=document.createElement('img');
+  img.src=item.side==='left'?'file/hrt1.png':'file/hrt2.png';
+  img.className='drag-item-image';
+  img.draggable=false;
+  el.appendChild(img);
+  if(section!=='InProgress'){
+    el.addEventListener('pointerdown',startDrag);
+    el.addEventListener('click',function(e){
+      placePiece(item.side, item.sliceId);
+    });
+  }
+  return el;
+}
+
+var dragState=null;
+
+function startDrag(e){
+  var el=e.currentTarget;
+  var section=el.getAttribute('data-section');
+  var side=el.getAttribute('data-side');
+  var sliceId=parseInt(el.getAttribute('data-slice'));
+  var rect=el.getBoundingClientRect();
+
+  var ghost=document.createElement('div');
+  ghost.className='drag-ghost';
+  var img=document.createElement('img');
+  img.src=side==='left'?'file/hrt1.png':'file/hrt2.png';
+  img.draggable=false;
+  ghost.appendChild(img);
+  ghost.style.left=rect.left+'px';
+  ghost.style.top=rect.top+'px';
+  document.body.appendChild(ghost);
+
+  el.style.visibility='hidden';
+  el.classList.add('dragging');
+
+  dragState={
+    el:el,
+    ghost:ghost,
+    sourceSection:section,
+    item:{sliceId:sliceId,side:side},
+    offsetX:e.clientX-rect.left,
+    offsetY:e.clientY-rect.top,
+    startX:e.clientX,
+    startY:e.clientY,
+    moved:false
+  };
+
+  document.addEventListener('pointermove',onDragMove);
+  document.addEventListener('pointerup',onDragEnd);
+}
+
+function onDragMove(e){
+  if(!dragState)return;
+  if(Math.abs(e.clientX-dragState.startX)>6||Math.abs(e.clientY-dragState.startY)>6){
+    dragState.moved=true;
+  }
+  dragState.ghost.style.left=(e.clientX-dragState.offsetX)+'px';
+  dragState.ghost.style.top=(e.clientY-dragState.offsetY)+'px';
+}
+
+function onDragEnd(e){
+  if(!dragState)return;
+  document.removeEventListener('pointermove',onDragMove);
+  document.removeEventListener('pointerup',onDragEnd);
+
+  var centerCol=document.getElementById('col-center');
+  var rect=centerCol.getBoundingClientRect();
+  var overCenter=e.clientX>=rect.left&&e.clientX<=rect.right&&e.clientY>=rect.top&&e.clientY<=rect.bottom;
+
+  if((overCenter||!dragState.moved)&&canDrop(dragState,'InProgress')){
+    var side=dragState.item.side;
+    var sliceId=dragState.item.sliceId;
+    placePiece(side, sliceId);
+  }else{
+    dragState.el.style.visibility='visible';
+  }
+
+  if(dragState.ghost&&dragState.ghost.parentNode)dragState.ghost.parentNode.removeChild(dragState.ghost);
+  dragState.el.classList.remove('dragging');
+  dragState=null;
+}
+
+document.getElementById('success-btn').addEventListener('click',function(){
+  showView('view-wish');
+  startWishScreen();
+});
+
+function startWishScreen(){
+  wishIdx=0;
+  buildDots();
+  startTypewriter();
+  wishAudio=playSound('file/hbd.mp3',0.5);
+  if(wishAudio)wishAudio.loop=true;
+}
+
+function buildDots(){
+  var container=document.getElementById('wish-dots');
+  container.innerHTML='';
+  WISH_MESSAGES.forEach(function(_,i){
+    var dot=document.createElement('div');
+    dot.className='wish-dot'+(i===wishIdx?' active':'');
+    container.appendChild(dot);
+  });
+}
+
+function startTypewriter(){
+  if(typewriterTimer){clearInterval(typewriterTimer)}
+  if(cursorBlinkTimer){clearInterval(cursorBlinkTimer)}
+  var textEl=document.getElementById('wish-text');
+  var msg=WISH_MESSAGES[wishIdx];
+  wishCharIdx=0;
+  textEl.innerHTML='<span class="wish-cursor"></span>';
+
+  cursorBlinkTimer=setInterval(function(){
+    var c=textEl.querySelector('.wish-cursor');
+    if(c){c.style.opacity=c.style.opacity==='0'?'1':'0'}
+  },500);
+
+  typewriterTimer=setInterval(function(){
+    if(wishCharIdx<msg.length){
+      var shown=msg.substring(0,wishCharIdx+1);
+      textEl.innerHTML=shown+'<span class="wish-cursor"></span>';
+      wishCharIdx++;
+    }else{
+      clearInterval(typewriterTimer);
+      setTimeout(function(){
+        wishIdx=(wishIdx+1)%WISH_MESSAGES.length;
+        buildDots();
+        startTypewriter();
+      },1000);
+    }
+  },60);
+}
+
+})();
+</script>
+<script src="file/navbar.js"></script>
+</body>
+</html>
