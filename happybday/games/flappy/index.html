@@ -287,7 +287,6 @@
         // Load images with error handling
         let birdImg = new Image();
         let pipeImg = new Image();
-        
         // Try to load custom images, fallback to generated ones if they fail
         function loadImages() {
             // Load bird image
@@ -296,11 +295,15 @@
                 checkAllImagesLoaded();
             };
             birdImg.onerror = function() {
-                console.log("Failed to load bird image, using fallback");
-                createFallbackBirdImage();
+                console.log("Failed to load bird image, trying snake.jpg");
+                birdImg.onerror = function() {
+                    createFallbackBirdImage();
+                };
+                birdImg.src = './snake.jpg';
             };
-            birdImg.src = './snake.jpg';
-            // Load pipe image
+            birdImg.src = './bird.jpeg';
+
+            // Load pipe/bricks image
             pipeImg.onload = function() {
                 console.log("Pipe image loaded successfully");
                 checkAllImagesLoaded();
@@ -317,7 +320,7 @@
         
         function checkAllImagesLoaded() {
             imagesLoaded++;
-            if (imagesLoaded === totalImages) {
+            if (imagesLoaded >= totalImages) {
                 console.log("All images loaded");
                 draw();
             }
@@ -404,15 +407,25 @@
                 for (let i = 0; i < this.position.length; i++) {
                     let p = this.position[i];
                     
-                    // Top pipe (flipped)
+                    // Top pipe/brick (flipped)
                     ctx.save();
                     ctx.translate(p.x, p.y + p.height);
                     ctx.scale(1, -1);
-                    ctx.drawImage(pipeImg, 0, 0, p.width, p.height);
+                    if (pipeImg && pipeImg.complete && pipeImg.naturalWidth !== 0) {
+                        ctx.drawImage(pipeImg, 0, 0, p.width, p.height);
+                    } else {
+                        ctx.fillStyle = '#73bf2e';
+                        ctx.fillRect(0, 0, p.width, p.height);
+                    }
                     ctx.restore();
                     
-                    // Bottom pipe
-                    ctx.drawImage(pipeImg, p.x, p.y + sizes.pipeGap + p.height, p.width, p.height);
+                    // Bottom pipe/brick
+                    if (pipeImg && pipeImg.complete && pipeImg.naturalWidth !== 0) {
+                        ctx.drawImage(pipeImg, p.x, p.y + sizes.pipeGap + p.height, p.width, p.height);
+                    } else {
+                        ctx.fillStyle = '#73bf2e';
+                        ctx.fillRect(p.x, p.y + sizes.pipeGap + p.height, p.width, p.height);
+                    }
                 }
             },
             
