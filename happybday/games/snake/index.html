@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Neon Snake Game 🐍</title>
+    <link rel="stylesheet" href="css/style.css">
     <style>
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -182,40 +182,43 @@ body {
 /* Big Square Snake Head with Image & Neon Glow */
 .head {
     background-color: #00f0ff;
+    background-image: url('img/snake.jpg');
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
     border: 2.5px solid #ffffff;
     border-radius: 6px;
     transform: scale(1.5);
     z-index: 5;
     box-shadow: 0 0 16px #00f0ff, 0 0 32px rgba(0, 240, 255, 0.85);
-    background-size: cover !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
 }
 
 /* Big Square Snake Body with Image & Neon Glow */
 .snake {
     background-color: #ff007f;
+    background-image: url('img/snake.jpg');
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
     border: 1.5px solid rgba(255, 255, 255, 0.85);
     border-radius: 5px;
     transform: scale(1.28);
     z-index: 4;
     box-shadow: 0 0 10px rgba(255, 0, 127, 0.7);
-    background-size: cover !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
 }
 
 /* Big Square Food with Image & Pulsing Neon Radiance */
 .food {
     background-color: #ffea00;
+    background-image: url('img/food.jpg');
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
     border: 2.5px solid #ffffff;
     border-radius: 6px;
     transform: scale(1.6);
     animation: foodGlow 0.9s ease-in-out infinite alternate;
     z-index: 6;
-    background-size: cover !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
 }
 
 @keyframes foodGlow {
@@ -305,7 +308,6 @@ body {
     letter-spacing: 0.3px;
     text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
 }
-
     </style>
 </head>
 <body>
@@ -348,8 +350,8 @@ body {
         </div>
     </div>
 
+    <script src="js/index.js"></script>
     <script>
-
 // Image Configuration (Square tiles with original images)
 const imageConfig = {
     useImages: true,
@@ -561,7 +563,7 @@ diffButtons.forEach(btn => {
 
         // Angle-based direction calculation with 8px deadzone
         if (dist > 8) {
-            const angleDeg = Math.atan2(dy, dx) * (180 / Math.PI); // -180 to 180
+            const angleDeg = Math.atan2(dy, dx) * (180 / Math.PI);
             if (angleDeg >= -45 && angleDeg <= 45) {
                 handleDirection(1, 0); // Right
             } else if (angleDeg > 45 && angleDeg < 135) {
@@ -574,7 +576,7 @@ diffButtons.forEach(btn => {
         }
     }
 
-    // Modern Pointer Events with PointerCapture
+    // Pointer Events with PointerCapture
     base.addEventListener('pointerdown', function(e) {
         activePointerId = e.pointerId;
         try { base.setPointerCapture(e.pointerId); } catch(err){}
@@ -651,7 +653,6 @@ if (hiscore !== null) {
 }
 
 window.requestAnimationFrame(main);
-
     </script>
 </body>
 </html>
