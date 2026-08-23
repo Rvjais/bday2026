@@ -13,11 +13,11 @@ const foodSound = new Audio('music/food.mp3');
 const gameOverSound = new Audio('music/gameover.mp3');
 const moveSound = new Audio('music/move.mp3');
 const musicSound = new Audio('music/music.mp3');
-let speed = 10;
+let speed = 9;
 let score = 0;
 let lastPaintTime = 0;
-let snakeArr = [{ x: 9, y: 9 }];
-let food = { x: 6, y: 7 };
+let snakeArr = [{ x: 8, y: 8 }];
+let food = { x: 4, y: 5 };
 
 const board = document.getElementById('board');
 const scoreBox = document.getElementById('scoreBox');
@@ -41,8 +41,8 @@ function isCollide(snake) {
             return true;
         }
     }
-    // Wall collision
-    if (snake[0].x >= 19 || snake[0].x <= 0 || snake[0].y >= 19 || snake[0].y <= 0) {
+    // Wall collision (15x15 board)
+    if (snake[0].x >= 16 || snake[0].x <= 0 || snake[0].y >= 16 || snake[0].y <= 0) {
         return true;
     }
     return false;
@@ -54,7 +54,7 @@ function gameEngine() {
         try { gameOverSound.play(); } catch(e){}
         try { musicSound.pause(); } catch(e){}
         inputDir = { x: 0, y: 0 };
-        snakeArr = [{ x: 9, y: 9 }];
+        snakeArr = [{ x: 8, y: 8 }];
         score = 0;
         scoreBox.innerHTML = "Score: 0";
     }
@@ -71,7 +71,7 @@ function gameEngine() {
         scoreBox.innerHTML = "Score: " + score;
         snakeArr.unshift({ x: snakeArr[0].x + inputDir.x, y: snakeArr[0].y + inputDir.y });
         let a = 2;
-        let b = 16;
+        let b = 14;
         food = { x: Math.round(a + (b - a) * Math.random()), y: Math.round(a + (b - a) * Math.random()) };
     }
 
@@ -123,14 +123,13 @@ function handleDirection(x, y) {
         try { moveSound.play(); } catch(e){}
         return;
     }
-    // Prevent 180 reverse into body
-    if (x !== 0 && inputDir.x !== -x) {
-        inputDir = { x: x, y: 0 };
-        try { moveSound.play(); } catch(e){}
-    } else if (y !== 0 && inputDir.y !== -y) {
-        inputDir = { x: 0, y: y };
-        try { moveSound.play(); } catch(e){}
+    // Prevent 180 reverse only when snake has segments behind it
+    if (snakeArr.length > 1) {
+        if (x !== 0 && inputDir.x === -x) return;
+        if (y !== 0 && inputDir.y === -y) return;
     }
+    inputDir = { x: x, y: y };
+    try { moveSound.play(); } catch(e){}
 }
 
 // Keyboard controls
@@ -171,20 +170,20 @@ diffButtons.forEach(btn => {
         this.classList.add('active');
         const mode = this.getAttribute('data-diff');
         currentDifficultyEl.textContent = mode;
-        if (mode === 'Easy') speed = 6;
-        else if (mode === 'Medium') speed = 11;
-        else if (mode === 'Hard') speed = 17;
+        if (mode === 'Easy') speed = 5.5;
+        else if (mode === 'Medium') speed = 9.5;
+        else if (mode === 'Hard') speed = 15;
     });
 });
 
-// Virtual Touch Joystick
+// Virtual Pointer Joystick & Direction Arrows
 (function setupJoystick() {
     const base = document.getElementById('joystick-base');
     const knob = document.getElementById('joystick-knob');
     if (!base || !knob) return;
 
-    let isDragging = false;
-    const maxRadius = 34;
+    let activePointerId = null;
+    const maxRadius = 38;
 
     function getCenter() {
         const rect = base.getBoundingClientRect();
@@ -194,7 +193,7 @@ diffButtons.forEach(btn => {
         };
     }
 
-    function handleMove(clientX, clientY) {
+    function processPointer(clientX, clientY) {
         const center = getCenter();
         const dx = clientX - center.x;
         const dy = clientY - center.y;
@@ -209,46 +208,85 @@ diffButtons.forEach(btn => {
 
         knob.style.transform = 'translate(' + clampedX + 'px, ' + clampedY + 'px)';
 
-        // Direction steering threshold (deadzone > 8px)
+        // Angle-based direction calculation with 8px deadzone
         if (dist > 8) {
-            const absX = Math.abs(dx);
-            const absY = Math.abs(dy);
-            if (absX > absY) {
-                if (dx > 0) handleDirection(1, 0);
-                else handleDirection(-1, 0);
-            } else {
-                if (dy > 0) handleDirection(0, 1);
-                else handleDirection(0, -1);
+            const angleDeg = Math.atan2(dy, dx) * (180 / Math.PI); // -180 to 180
+            if (angleDeg >= -45 && angleDeg <= 45) {
+                handleDirection(1, 0); // Right
+            } else if (angleDeg > 45 && angleDeg < 135) {
+                handleDirection(0, 1); // Down
+            } else if (angleDeg >= 135 || angleDeg <= -135) {
+                handleDirection(-1, 0); // Left
+            } else if (angleDeg > -135 && angleDeg < -45) {
+                handleDirection(0, -1); // Up
             }
         }
     }
 
-    function onStart(e) {
-        isDragging = true;
-        const pt = e.touches ? e.touches[0] : e;
-        handleMove(pt.clientX, pt.clientY);
+    // Modern Pointer Events with PointerCapture
+    base.addEventListener('pointerdown', function(e) {
+        activePointerId = e.pointerId;
+        try { base.setPointerCapture(e.pointerId); } catch(err){}
+        processPointer(e.clientX, e.clientY);
+        e.preventDefault();
+    });
+
+    base.addEventListener('pointermove', function(e) {
+        if (activePointerId === e.pointerId) {
+            processPointer(e.clientX, e.clientY);
+            e.preventDefault();
+        }
+    });
+
+    function resetJoystick(e) {
+        if (activePointerId === e.pointerId || activePointerId !== null) {
+            activePointerId = null;
+            knob.style.transform = 'translate(0px, 0px)';
+        }
     }
 
-    function onMove(e) {
-        if (!isDragging) return;
-        const pt = e.touches ? e.touches[0] : e;
-        handleMove(pt.clientX, pt.clientY);
-        if (e.cancelable) e.preventDefault();
-    }
+    base.addEventListener('pointerup', resetJoystick);
+    base.addEventListener('pointercancel', resetJoystick);
+    base.addEventListener('lostpointercapture', resetJoystick);
 
-    function onEnd() {
-        isDragging = false;
-        knob.style.transform = 'translate(0px, 0px)';
-    }
+    // Direct Direction Arrow Taps
+    document.querySelector('.j-up')?.addEventListener('pointerdown', (e) => { e.stopPropagation(); handleDirection(0, -1); });
+    document.querySelector('.j-down')?.addEventListener('pointerdown', (e) => { e.stopPropagation(); handleDirection(0, 1); });
+    document.querySelector('.j-left')?.addEventListener('pointerdown', (e) => { e.stopPropagation(); handleDirection(-1, 0); });
+    document.querySelector('.j-right')?.addEventListener('pointerdown', (e) => { e.stopPropagation(); handleDirection(1, 0); });
+})();
 
-    base.addEventListener('touchstart', onStart, { passive: false });
-    window.addEventListener('touchmove', onMove, { passive: false });
-    window.addEventListener('touchend', onEnd);
-    window.addEventListener('touchcancel', onEnd);
+// Touch Swipe Gesture on Board
+(function setupSwipeControls() {
+    let startX = 0;
+    let startY = 0;
+    const threshold = 18;
 
-    base.addEventListener('mousedown', onStart);
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('mouseup', onEnd);
+    board.addEventListener('touchstart', function(e) {
+        if (e.touches && e.touches[0]) {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        }
+    }, { passive: true });
+
+    board.addEventListener('touchend', function(e) {
+        if (e.changedTouches && e.changedTouches[0]) {
+            const dx = e.changedTouches[0].clientX - startX;
+            const dy = e.changedTouches[0].clientY - startY;
+            const absX = Math.abs(dx);
+            const absY = Math.abs(dy);
+
+            if (Math.max(absX, absY) > threshold) {
+                if (absX > absY) {
+                    if (dx > 0) handleDirection(1, 0);
+                    else handleDirection(-1, 0);
+                } else {
+                    if (dy > 0) handleDirection(0, 1);
+                    else handleDirection(0, -1);
+                }
+            }
+        }
+    }, { passive: true });
 })();
 
 // HiScore setup & Start
