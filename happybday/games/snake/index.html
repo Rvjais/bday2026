@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Neon Snake Game 🐍</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="game-wrapper">
+        <!-- Top HUD Header -->
+        <div class="hud-top">
+            <div class="scores-row">
+                <div class="score-pill" id="scoreBox">Score: 0</div>
+                <div class="score-pill hiscore" id="hiscoreBox">HiScore: 0</div>
+            </div>
+
+            <!-- Difficulty Switcher with Active Highlight -->
+            <div class="difficulty-wrap">
+                <div class="diff-badge">Mode: <strong id="current-difficulty">Medium</strong></div>
+                <div class="diff-pills" id="diff-group">
+                    <button class="diff-btn" id="easy" data-diff="Easy">🌸 Easy</button>
+                    <button class="diff-btn active" id="medium" data-diff="Medium">⚡ Medium</button>
+                    <button class="diff-btn" id="hard" data-diff="Hard">🔥 Hard</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Snake Board -->
+        <div class="board-container">
+            <div id="board"></div>
+        </div>
+
+        <!-- Virtual Joystick Controls -->
+        <div class="joystick-section">
+            <div class="joystick-base" id="joystick-base">
+                <span class="j-dir j-up">▲</span>
+                <span class="j-dir j-right">►</span>
+                <span class="j-dir j-down">▼</span>
+                <span class="j-dir j-left">◄</span>
+                <div class="joystick-knob" id="joystick-knob">
+                    <div class="knob-ring"></div>
+                </div>
+            </div>
+            <div class="joystick-hint">Drag or tap Joystick to steer 🎮</div>
+        </div>
+    </div>
+
+    <script src="js/index.js"></script>
+</body>
+</html>
