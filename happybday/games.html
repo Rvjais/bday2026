@@ -355,8 +355,13 @@
   <script src="file/navbar.js"></script>
   <script>
     function openGame(url, title) {
+      var resolvedUrl = url;
+      // Resolve path properly on Vercel vs local directory
+      if (window.location.pathname.includes('/happybday')) {
+        resolvedUrl = '/happybday/' + url.replace(/^\.\//, '');
+      }
       document.getElementById('modal-title').textContent = title;
-      document.getElementById('game-frame').src = url;
+      document.getElementById('game-frame').src = resolvedUrl;
       document.getElementById('game-modal').classList.add('open');
       document.body.style.overflow = 'hidden';
     }

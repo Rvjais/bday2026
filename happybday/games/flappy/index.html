@@ -54,6 +54,8 @@
             pointer-events: none;
         }
         
+        #mobile-flap-btn { display: none !important; }
+        .game-active #mobile-flap-btn { display: flex !important; }
         .start-screen {
             position: absolute;
             top: 0;
@@ -340,9 +342,25 @@
                 ctx.clip();
                 
                 // Draw the bird image
-                ctx.drawImage(birdImg, this.x, this.y, this.width, this.height);
+                if (birdImg && birdImg.complete && birdImg.naturalWidth !== 0) {
+                    ctx.drawImage(birdImg, this.x, this.y, this.width, this.height);
+                } else {
+                    ctx.fillStyle = '#ff69b4';
+                    ctx.fill();
+                }
                 ctx.restore();
 
+                // Draw glowing border ring around bird avatar
+                ctx.save();
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 3;
+                ctx.shadowColor = '#ff69b4';
+                ctx.shadowBlur = 10;
+                ctx.beginPath();
+                ctx.arc(this.x + this.width/2, this.y + this.height/2, this.width/2, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.restore();
+            },
             
             flap: function() {
                 this.velocity = this.jump;

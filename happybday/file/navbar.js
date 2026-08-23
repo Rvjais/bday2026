@@ -1,18 +1,26 @@
 
 (function() {
   var PAGES = [
-    { id: 1, name: 'Blossom', icon: '🌸', url: 'index.html' },
-    { id: 2, name: 'Music', icon: '🎵', url: 'music.html' },
-    { id: 3, name: 'Wishes', icon: '💖', url: 'birthday.html' },
-    { id: 4, name: 'Arcade', icon: '🎮', url: 'games.html' }
+    { id: 1, name: 'Blossom', icon: '🌸', file: 'index.html' },
+    { id: 2, name: 'Music', icon: '🎵', file: 'music.html' },
+    { id: 3, name: 'Wishes', icon: '💖', file: 'birthday.html' },
+    { id: 4, name: 'Arcade', icon: '🎮', file: 'games.html' }
   ];
 
-  // Determine current page ID
+  // Determine current page ID accurately on local and Vercel clean URLs
   var pathName = window.location.pathname.toLowerCase();
+  var href = window.location.href.toLowerCase();
   var currentPageId = 1;
-  if (pathName.indexOf('music.html') !== -1) currentPageId = 2;
-  else if (pathName.indexOf('birthday.html') !== -1) currentPageId = 3;
-  else if (pathName.indexOf('games.html') !== -1) currentPageId = 4;
+
+  if (pathName.includes('game') || pathName.includes('arcade') || href.includes('games')) {
+    currentPageId = 4;
+  } else if (pathName.includes('birth') || pathName.includes('wish') || href.includes('birthday')) {
+    currentPageId = 3;
+  } else if (pathName.includes('music') || pathName.includes('song') || href.includes('music')) {
+    currentPageId = 2;
+  } else {
+    currentPageId = 1;
+  }
 
   // Manage Unlock Progress in localStorage
   var allUnlocked = localStorage.getItem('bday_all_unlocked') === 'true';
@@ -26,6 +34,15 @@
   if (currentPageId === 4 || unlockedLevel >= 4) {
     allUnlocked = true;
     localStorage.setItem('bday_all_unlocked', 'true');
+  }
+
+  // Helper to resolve clean URLs across Vercel and local static files
+  function resolvePageUrl(file) {
+    // If running inside /happybday/ folder
+    if (window.location.pathname.includes('/happybday')) {
+      return '/happybday/' + file;
+    }
+    return file;
   }
 
   // Inject Navbar HTML & Toast into DOM
@@ -50,7 +67,7 @@
 
       var item = document.createElement('a');
       item.className = 'bday-nav-item' + (isActive ? ' active' : '') + (!isUnlocked ? ' locked' : '');
-      item.href = isUnlocked ? page.url : 'javascript:void(0);';
+      item.href = isUnlocked ? resolvePageUrl(page.file) : 'javascript:void(0);';
 
       var iconHtml = '<span class="bday-nav-icon">' + page.icon + '</span>';
       var labelHtml = '<span class="bday-nav-label">' + page.name + '</span>';
